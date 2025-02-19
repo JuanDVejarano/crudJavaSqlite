@@ -1,0 +1,4 @@
+[ZoneTransfer]
+ZoneId=3
+ReferrerUrl=https://github.com/xerial/sqlite-jdbc/releases
+HostUrl=https://objects.githubusercontent.com/github-production-release-asset-2e65be/22684655/97f14f09-f0d0-4c88-bfdc-1e5e0dcaace5?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=releaseassetproduction%2F20250219%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20250219T200248Z&X-Amz-Expires=300&X-Amz-Signature=9315c0894ec295633253290ac57848292a3c608bae3deb4b3194b0a6d4aa0c0b&X-Amz-SignedHeaders=host&response-content-disposition=attachment%3B%20filename%3Dsqlite-jdbc-3.49.1.0.jar&response-content-type=application%2Foctet-stream
