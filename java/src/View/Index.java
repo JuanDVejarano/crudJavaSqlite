@@ -1,4 +1,8 @@
+package src.View;
+
 import java.sql.ResultSet;
+
+import src.Model.Conexion;
 
 public class Index {
     public static void main(String[] args) {
@@ -11,7 +15,7 @@ public class Index {
         System.out.println("Consulta:" + rs);
 
         // Inserción
-        sql = "insert into T_Alumnos Values (13, 'Alejandra', 'Quiroga', '3203324478', 'MiEmail@gamil.com', 5, 7);";
+        sql = "insert into T_Alumnos Values (14, 'Alejandra', 'Quiroga', '3203324478', 'MiEmail@gamil.com', 5, 7);";
         if (conexion.executeUpdate(sql)) {
             System.out.println("Inserción exitosa");
         } else {
