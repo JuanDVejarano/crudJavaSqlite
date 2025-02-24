@@ -19,3 +19,9 @@ y ejecutamos el comando
 ```bash
 export DISPLAY=IPV4deWindows:0.0
 ```
+
+para ver que tiene la variable de entorno DISPLAY
+
+```bash
+echo $DISPLAY
+```
