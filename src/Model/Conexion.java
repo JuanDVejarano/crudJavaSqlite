@@ -33,7 +33,7 @@ public class Conexion {
         }
     }
 
-    public boolean executeUpdate(String sql) {
+    protected boolean executeUpdate(String sql) {
         Connection conn = null;
         try {
             conn = this.connect();
@@ -49,7 +49,7 @@ public class Conexion {
         }
     }
 
-    public ResultSet executeQuery(String sql) {
+    protected ResultSet executeQuery(String sql) {
         ResultSet rs = null;
         Connection conn = null;
         try {
