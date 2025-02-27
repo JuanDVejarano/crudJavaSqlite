@@ -27,6 +27,22 @@ public class Alumno extends javax.swing.JFrame {
     }
 
     @SuppressWarnings("unchecked")
+
+    public void llenarTablaAlumno() {
+        ArrayList<String[]> result; 
+        result = alumno.consultaGeneral();
+        DefaultTableModel model = new DefaultTableModel();
+        model.addColumn("Cedula");
+        model.addColumn("Nombre");
+        model.addColumn("Apellidos");
+        model.addColumn("Celular");
+        model.addColumn("Correo");
+        model.addColumn("Id Programa");
+        for (String[] row : result) {
+            model.addRow(row);
+        }
+        tableAlumno.setModel(model);
+    }
     
     //#region initComponents
     private void initComponents() {
@@ -257,24 +273,14 @@ public class Alumno extends javax.swing.JFrame {
         } else {
             JOptionPane.showMessageDialog(null, "Error al agregar alumno");
         }
+
+        llenarTablaAlumno();
         
     }
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {
-        ArrayList<String[]> result; 
-        result = alumno.consultaGeneral();
-        DefaultTableModel model = new DefaultTableModel();
-        model.addColumn("Cedula");
-        model.addColumn("Nombre");
-        model.addColumn("Apellidos");
-        model.addColumn("Celular");
-        model.addColumn("Correo");
-        model.addColumn("Id Programa");
-        for (String[] row : result) {
-            model.addRow(row);
-        }
-        tableAlumno.setModel(model);
-
+        
+        llenarTablaAlumno();
     }
 
     public static void main(String args[]) {
