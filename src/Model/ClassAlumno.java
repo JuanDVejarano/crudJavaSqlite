@@ -1,12 +1,19 @@
 package src.Model;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+
 public class ClassAlumno extends Conexion {
+
+    //#region Attributes
     private int cedula;
     private String nombre;
     private String apellidos;
     private String celular;
     private String correo;
     private int idPrograma;
+    //#endregion
 
     Conexion conexion = new Conexion();
 
@@ -64,6 +71,9 @@ public class ClassAlumno extends Conexion {
     }
     //#endregion
 
+
+    //#region Methods
+
     public boolean insertAlumno() {
         String sql = "insert into T_Alumno Values (" + cedula + ", '" + nombre + "', '" + apellidos + "', '" + celular + "', '" + correo + "', " + idPrograma + ");";
         if (conexion.executeUpdate(sql)) {
@@ -72,4 +82,15 @@ public class ClassAlumno extends Conexion {
             return false;
         }
     }
+
+    public ArrayList<String[]> consultaGeneral() {
+        String sql = "SELECT Num_ID as Cedula, Nombre, Apellidos, Celular, Correo, FK_IdPrograma as Id_Programa FROM T_Alumno;";
+        ArrayList<String[]> result = conexion.executeQuery(sql);
+        for (String[] row : result) {
+            System.out.println("Cedula: " + row[0] + ", Nombre: " + row[1] + ", Apellidos: " + row[2] + ", Celular: " + row[3] + ", Correo: " + row[4] + ", Id Programa: " + row[5]);
+        }
+        return result;
+    }
+
+    //#endregion
 }

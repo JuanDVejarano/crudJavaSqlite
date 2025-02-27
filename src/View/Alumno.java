@@ -1,8 +1,11 @@
 package src.View;
 
 import javax.swing.JOptionPane;
-
 import src.Model.ClassAlumno;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import javax.swing.table.DefaultTableModel;
+import java.util.ArrayList;
 
 
 
@@ -16,6 +19,11 @@ public class Alumno extends javax.swing.JFrame {
 
     public Alumno() {
         initComponents();
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
     }
 
     @SuppressWarnings("unchecked")
@@ -250,6 +258,23 @@ public class Alumno extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Error al agregar alumno");
         }
         
+    }
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {
+        ArrayList<String[]> result; 
+        result = alumno.consultaGeneral();
+        DefaultTableModel model = new DefaultTableModel();
+        model.addColumn("Cedula");
+        model.addColumn("Nombre");
+        model.addColumn("Apellidos");
+        model.addColumn("Celular");
+        model.addColumn("Correo");
+        model.addColumn("Id Programa");
+        for (String[] row : result) {
+            model.addRow(row);
+        }
+        tableAlumno.setModel(model);
+
     }
 
     public static void main(String args[]) {
