@@ -11,7 +11,7 @@ public class Conexion {
         Connection conn = null;
         try {
             // db parameters
-            String url = "jdbc:sqlite:/home/juanj/Projects-Java/crud/db/Prueba.db";
+            String url = "jdbc:sqlite:/home/juanj/Projects-Java/crud/db/Alumnos.db";
             // create a connection to the database
             conn = DriverManager.getConnection(url);
             System.out.println("Connection to SQLite has been established.");

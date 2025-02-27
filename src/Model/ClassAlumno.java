@@ -1,3 +1,5 @@
+package src.Model;
+
 public class ClassAlumno extends Conexion {
     private int cedula;
     private String nombre;
@@ -9,13 +11,8 @@ public class ClassAlumno extends Conexion {
 
     Conexion conexion = new Conexion();
 
-    public ClassAlumno(int cedula, String nombre, String apellidos, String celular, String correo, int idPrograma, int idSede) {
-        this.cedula = cedula;
-        this.nombre = nombre;
-        this.apellidos = apellidos;
-        this.celular = celular;
-        this.correo = correo;
-        this.idPrograma = idPrograma;
+    public ClassAlumno() {
+       
     }
 
     //#region Getters and Setters
@@ -68,12 +65,12 @@ public class ClassAlumno extends Conexion {
     }
     //#endregion
 
-    public void insrtAlumno() {
+    public boolean insertAlumno() {
         String sql = "insert into T_Alumnos Values (" + cedula + ", '" + nombre + "', '" + apellidos + "', '" + celular + "', '" + correo + "', " + idPrograma + ", " + idSede + ");";
         if (conexion.executeUpdate(sql)) {
-            System.out.println("Inserción exitosa");
+            return true;
         } else {
-            System.out.println("Error en la inserción");
+            return false;
         }
     }
 }

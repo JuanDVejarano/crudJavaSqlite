@@ -2,6 +2,8 @@ package src.View;
 
 import javax.swing.JOptionPane;
 
+import src.Model.ClassAlumno;
+
 
 
 /**
@@ -239,7 +241,8 @@ public class Alumno extends javax.swing.JFrame {
         alumno.setApellidos(txtApellido.getText());
         alumno.setCelular(txtCel.getText());
         alumno.setCorreo(txtEmail.getText());
-        alumno.setIdPrograma(cmboxPrograma.getSelectedIndex());
+        //alumno.setIdPrograma(cmboxPrograma.getSelectedIndex());
+        alumno.setIdPrograma(1);
 
         if (alumno.insertAlumno()) {
             JOptionPane.showMessageDialog(null, "Alumno agregado correctamente");
