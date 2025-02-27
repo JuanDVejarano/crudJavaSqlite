@@ -1,12 +1,16 @@
-
 package src.View;
+
+import javax.swing.JOptionPane;
+
+
 
 /**
  *
- * @author juliethosuna
+ * @author juan D Vejarano
  */
 public class Alumno extends javax.swing.JFrame {
 
+    ClassAlumno alumno = new ClassAlumno();
 
     public Alumno() {
         initComponents();
@@ -81,6 +85,11 @@ public class Alumno extends javax.swing.JFrame {
         btnBuscar.setText("Buscar");
 
         btnAgregar.setText("Agregar");
+        btnAgregar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAgregarActionPerformed(evt);
+            }
+        });
 
         btnActualizar.setText("Actualizar");
 
@@ -223,6 +232,22 @@ public class Alumno extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
     //#endregion
 
+    private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {
+
+        alumno.setCedula(Integer.parseInt(txtCedula.getText()));
+        alumno.setNombre(txtName.getText());
+        alumno.setApellidos(txtApellido.getText());
+        alumno.setCelular(txtCel.getText());
+        alumno.setCorreo(txtEmail.getText());
+        alumno.setIdPrograma(cmboxPrograma.getSelectedIndex());
+
+        if (alumno.insertAlumno()) {
+            JOptionPane.showMessageDialog(null, "Alumno agregado correctamente");
+        } else {
+            JOptionPane.showMessageDialog(null, "Error al agregar alumno");
+        }
+        
+    }
 
     public static void main(String args[]) {
 
