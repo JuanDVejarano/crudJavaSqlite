@@ -7,7 +7,6 @@ public class ClassAlumno extends Conexion {
     private String celular;
     private String correo;
     private int idPrograma;
-    private int idSede;
 
     Conexion conexion = new Conexion();
 
@@ -66,7 +65,7 @@ public class ClassAlumno extends Conexion {
     //#endregion
 
     public boolean insertAlumno() {
-        String sql = "insert into T_Alumnos Values (" + cedula + ", '" + nombre + "', '" + apellidos + "', '" + celular + "', '" + correo + "', " + idPrograma + ", " + idSede + ");";
+        String sql = "insert into T_Alumno Values (" + cedula + ", '" + nombre + "', '" + apellidos + "', '" + celular + "', '" + correo + "', " + idPrograma + ");";
         if (conexion.executeUpdate(sql)) {
             return true;
         } else {
