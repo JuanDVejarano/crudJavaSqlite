@@ -11,6 +11,8 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 
 
@@ -119,6 +121,11 @@ public class Alumno extends javax.swing.JFrame {
         jLabel10.setText("Buscar por nombre:");
 
         btnBuscar.setText("Buscar");
+        btnBuscar.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                btnBuscarActionPerformed(evt);
+            }
+        });
 
         btnAgregar.setText("Agregar");
         btnAgregar.addActionListener(new java.awt.event.ActionListener() {
@@ -275,6 +282,8 @@ public class Alumno extends javax.swing.JFrame {
     //#endregion
 
 
+    //#region Metodos
+
     //Metodo para limpiar campos
     public void limpiarCampos() {
         txtCedula.setText("");
@@ -335,7 +344,10 @@ public class Alumno extends javax.swing.JFrame {
             cmboxPrograma.addItem(row[1]);
         }
     }
+    //#endregion
 
+
+    //#region Eventos
     //Click agregar alumno
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {
         
@@ -364,6 +376,31 @@ public class Alumno extends javax.swing.JFrame {
         
     }
 
+    //Click buscar alumno por cedula
+    private void btnBuscarActionPerformed(ActionEvent evt) {
+        String cedulaText = txtCedula.getText();
+        if (!cedulaText.isEmpty()) {
+            try {
+                int cedula = Integer.parseInt(cedulaText);
+                ArrayList<String[]> result = alumno.consultaCedula(cedula);
+                if (result.size() > 0) {
+                    txtName.setText(result.get(0)[1]);
+                    txtApellido.setText(result.get(0)[2]);
+                    txtCel.setText(result.get(0)[3]);
+                    txtEmail.setText(result.get(0)[4]);
+                    cmboxPrograma.setSelectedItem(result.get(0)[5]);
+                } else {
+                    JOptionPane.showMessageDialog(null, "No se encontró un alumno con la cédula ingresada");
+                    limpiarCampos();
+                }
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(null, "Por favor ingrese un número de cédula válido");
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Por favor ingrese un número de cédula");
+        }
+    }
+
     //Click en la tabla para seleccionar un alumno
     private void tableAlumnoMouseClicked(MouseEvent evt) {
         int row = tableAlumno.getSelectedRow();
@@ -385,6 +422,8 @@ public class Alumno extends javax.swing.JFrame {
     private void txtSearchNameKeyReleased(KeyEvent evt) {
         llenarTablaAlumno(txtSearchName.getText());
     }
+
+    //#endregion
 
 
     //evento inicializar

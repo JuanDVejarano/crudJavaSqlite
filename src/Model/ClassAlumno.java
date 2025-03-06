@@ -95,5 +95,11 @@ public class ClassAlumno extends Conexion {
         return result;
     }
 
+    public ArrayList<String[]> consultaCedula(int cedula) {
+        String sql = "SELECT Num_ID as Cedula, Nombre, Apellidos, Celular, Correo, Programa FROM T_Alumno inner join T_Programa on T_Alumno.FK_IdPrograma = T_Programa.ID where Num_ID = " + cedula + ";";
+        ArrayList<String[]> result = conexion.executeQuery(sql);
+        return result;
+    }
+
     //#endregion
 }
