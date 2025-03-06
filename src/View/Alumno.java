@@ -101,7 +101,11 @@ public class Alumno extends javax.swing.JFrame {
             new String [] {
 
             }
-        ));
+        ){
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        });
         jScrollPane1.setViewportView(tableAlumno);
 
         jLabel10.setText("Buscar por nombre:");
@@ -276,7 +280,12 @@ public class Alumno extends javax.swing.JFrame {
     public void llenarTablaAlumno() {
         ArrayList<String[]> result; 
         result = alumno.consultaGeneral();
-        DefaultTableModel model = new DefaultTableModel();
+        DefaultTableModel model = new DefaultTableModel() {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false; // Todas las celdas no son editables
+            }
+        };
         model.addColumn("Cedula");
         model.addColumn("Nombre");
         model.addColumn("Apellidos");
