@@ -1,9 +1,11 @@
-import java.sql.ResultSet;
-import java.sql.SQLException;
-
 package src.Model;
 
-public class Programa extends Conexion {
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+
+
+public class ClassPrograma extends Conexion {
     private int idPrograma;
     private String nombrePrograma;
 
@@ -27,12 +29,13 @@ public class Programa extends Conexion {
     }
     //#endregion
 
-    public Programa() {
+    public ClassPrograma() {
 
     }
 
-    public ResultSet consultaGeneral() {
-        String sql = "SELECT * FROM Programa";
-        return conexion.executeQuery(sql);
+    public ArrayList<String[]> consultaGeneral() {
+        String sql = "SELECT * FROM T_Programa";
+        ArrayList<String[]> result = conexion.executeQuery(sql);
+        return result;
     }
 }

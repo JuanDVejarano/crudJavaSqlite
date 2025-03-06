@@ -1,7 +1,7 @@
 Ejecutar con el controlador de SQLite
 
 ```bash
-javac -cp .:sqlite-jdbc-3.49.1.0.jar ./src/Model/Conexion.java ./src/Model/ClassAlumno.java  ./src/View/Alumno.java
+javac -cp .:sqlite-jdbc-3.49.1.0.jar ./src/Model/Conexion.java ./src/Model/ClassAlumno.java ./src/Model/ClassPrograma.java  ./src/View/Alumno.java
 ```
 
 Ejecutar con el controlador de SQLite

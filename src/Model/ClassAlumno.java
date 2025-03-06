@@ -86,9 +86,12 @@ public class ClassAlumno extends Conexion {
     public ArrayList<String[]> consultaGeneral() {
         String sql = "SELECT Num_ID as Cedula, Nombre, Apellidos, Celular, Correo, Programa FROM T_Alumno inner join T_Programa on T_Alumno.FK_IdPrograma = T_Programa.ID;";
         ArrayList<String[]> result = conexion.executeQuery(sql);
-        for (String[] row : result) {
-            System.out.println("Cedula: " + row[0] + ", Nombre: " + row[1] + ", Apellidos: " + row[2] + ", Celular: " + row[3] + ", Correo: " + row[4] + ", Id Programa: " + row[5]);
-        }
+        return result;
+    }
+
+    public ArrayList<String[]> consultaLike(String nombre) {
+        String sql = "SELECT Num_ID as Cedula, Nombre, Apellidos, Celular, Correo, Programa FROM T_Alumno inner join T_Programa on T_Alumno.FK_IdPrograma = T_Programa.ID where Nombre like '%" + nombre + "%';";
+        ArrayList<String[]> result = conexion.executeQuery(sql);
         return result;
     }
 

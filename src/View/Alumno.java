@@ -2,10 +2,13 @@ package src.View;
 
 import javax.swing.JOptionPane;
 import src.Model.ClassAlumno;
+import src.Model.ClassPrograma;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.table.DefaultTableModel;
 import java.util.ArrayList;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 
 
@@ -16,6 +19,8 @@ import java.util.ArrayList;
 public class Alumno extends javax.swing.JFrame {
 
     ClassAlumno alumno = new ClassAlumno();
+    ClassPrograma programa = new ClassPrograma();
+    ArrayList<String[]> resultPrograma;
 
     public Alumno() {
         initComponents();
@@ -26,23 +31,18 @@ public class Alumno extends javax.swing.JFrame {
         });
     }
 
+    public int idPrograma(String nombrePrograma){
+        int id = 0;
+        for (String[] row : resultPrograma) {
+            if (row[1].equals(nombrePrograma)) {
+                id = Integer.parseInt(row[0]);
+            }
+        }
+        return id;
+    }
+
     @SuppressWarnings("unchecked")
 
-    public void llenarTablaAlumno() {
-        ArrayList<String[]> result; 
-        result = alumno.consultaGeneral();
-        DefaultTableModel model = new DefaultTableModel();
-        model.addColumn("Cedula");
-        model.addColumn("Nombre");
-        model.addColumn("Apellidos");
-        model.addColumn("Celular");
-        model.addColumn("Correo");
-        model.addColumn("Id Programa");
-        for (String[] row : result) {
-            model.addRow(row);
-        }
-        tableAlumno.setModel(model);
-    }
     
     //#region initComponents
     private void initComponents() {
@@ -91,8 +91,6 @@ public class Alumno extends javax.swing.JFrame {
 
         jLabel9.setText("Programa:");
 
-        cmboxPrograma.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
         tableAlumno.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {},
@@ -139,6 +137,12 @@ public class Alumno extends javax.swing.JFrame {
         jScrollPane2.setViewportView(tableMateria);
 
         btnAgregarMateria.setText("Agregar Materia");
+
+        tableAlumno.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent evt) {
+                tableAlumnoMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -258,6 +262,43 @@ public class Alumno extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
     //#endregion
 
+
+    //Metodo para limpiar campos
+    public void limpiarCampos() {
+        txtCedula.setText("");
+        txtName.setText("");
+        txtApellido.setText("");
+        txtCel.setText("");
+        txtEmail.setText("");
+    }
+
+    //Metodo cargar alumnos en la tabla
+    public void llenarTablaAlumno() {
+        ArrayList<String[]> result; 
+        result = alumno.consultaGeneral();
+        DefaultTableModel model = new DefaultTableModel();
+        model.addColumn("Cedula");
+        model.addColumn("Nombre");
+        model.addColumn("Apellidos");
+        model.addColumn("Celular");
+        model.addColumn("Correo");
+        model.addColumn("Id Programa");
+        for (String[] row : result) {
+            model.addRow(row);
+        }
+        tableAlumno.setModel(model);
+    }
+
+    //Metodo llenar combobox de programas
+    public void llenarComboPrograma() {
+        resultPrograma = programa.consultaGeneral();
+        //se carga el index y el valor
+        for (String[] row : resultPrograma) {
+            cmboxPrograma.addItem(row[1]);
+        }
+    }
+
+    //Click agregar alumno
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {
 
         alumno.setCedula(Integer.parseInt(txtCedula.getText()));
@@ -265,11 +306,11 @@ public class Alumno extends javax.swing.JFrame {
         alumno.setApellidos(txtApellido.getText());
         alumno.setCelular(txtCel.getText());
         alumno.setCorreo(txtEmail.getText());
-        //alumno.setIdPrograma(cmboxPrograma.getSelectedIndex());
-        alumno.setIdPrograma(1);
+        alumno.setIdPrograma(idPrograma(cmboxPrograma.getSelectedItem().toString()));
 
         if (alumno.insertAlumno()) {
             JOptionPane.showMessageDialog(null, "Alumno agregado correctamente");
+            limpiarCampos();
         } else {
             JOptionPane.showMessageDialog(null, "Error al agregar alumno");
         }
@@ -278,11 +319,24 @@ public class Alumno extends javax.swing.JFrame {
         
     }
 
-    private void formWindowOpened(java.awt.event.WindowEvent evt) {
-        
-        llenarTablaAlumno();
+    //Click en la tabla para seleccionar un alumno
+    private void tableAlumnoMouseClicked(MouseEvent evt) {
+        int row = tableAlumno.getSelectedRow();
+        txtCedula.setText(tableAlumno.getValueAt(row, 0).toString());
+        txtName.setText(tableAlumno.getValueAt(row, 1).toString());
+        txtApellido.setText(tableAlumno.getValueAt(row, 2).toString());
+        txtCel.setText(tableAlumno.getValueAt(row, 3).toString());
+        txtEmail.setText(tableAlumno.getValueAt(row, 4).toString());
+        cmboxPrograma.setSelectedItem(tableAlumno.getValueAt(row, 5).toString());
     }
 
+    //Metodo al cargar el formulario
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {
+        llenarTablaAlumno();
+        llenarComboPrograma();
+    }
+
+    //evento inicializar
     public static void main(String args[]) {
 
 
@@ -313,7 +367,7 @@ public class Alumno extends javax.swing.JFrame {
         });
     }
 
-    //#region Variables declaration
+    //#region nombre de componentes
     private javax.swing.JButton btnActualizar;
     private javax.swing.JButton btnAgregar;
     private javax.swing.JButton btnAgregarMateria;
