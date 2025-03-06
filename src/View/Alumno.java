@@ -9,6 +9,8 @@ import javax.swing.table.DefaultTableModel;
 import java.util.ArrayList;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 
 
@@ -107,6 +109,12 @@ public class Alumno extends javax.swing.JFrame {
             }
         });
         jScrollPane1.setViewportView(tableAlumno);
+
+        txtSearchName.addKeyListener(new KeyAdapter() {
+            public void keyReleased(KeyEvent evt) {
+                txtSearchNameKeyReleased(evt);
+            }
+        });
 
         jLabel10.setText("Buscar por nombre:");
 
@@ -298,6 +306,27 @@ public class Alumno extends javax.swing.JFrame {
         tableAlumno.setModel(model);
     }
 
+    public void llenarTablaAlumno(String nombre) {
+        ArrayList<String[]> result; 
+        result = alumno.consultaNombre(nombre);
+        DefaultTableModel model = new DefaultTableModel() {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false; // Todas las celdas no son editables
+            }
+        };
+        model.addColumn("Cedula");
+        model.addColumn("Nombre");
+        model.addColumn("Apellidos");
+        model.addColumn("Celular");
+        model.addColumn("Correo");
+        model.addColumn("Id Programa");
+        for (String[] row : result) {
+            model.addRow(row);
+        }
+        tableAlumno.setModel(model);
+    }
+
     //Metodo llenar combobox de programas
     public void llenarComboPrograma() {
         resultPrograma = programa.consultaGeneral();
@@ -351,6 +380,12 @@ public class Alumno extends javax.swing.JFrame {
         llenarTablaAlumno();
         llenarComboPrograma();
     }
+
+    //Metodo para buscar por nombre
+    private void txtSearchNameKeyReleased(KeyEvent evt) {
+        llenarTablaAlumno(txtSearchName.getText());
+    }
+
 
     //evento inicializar
     public static void main(String args[]) {

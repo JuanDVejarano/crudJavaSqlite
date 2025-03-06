@@ -89,7 +89,7 @@ public class ClassAlumno extends Conexion {
         return result;
     }
 
-    public ArrayList<String[]> consultaLike(String nombre) {
+    public ArrayList<String[]> consultaNombre(String nombre) {
         String sql = "SELECT Num_ID as Cedula, Nombre, Apellidos, Celular, Correo, Programa FROM T_Alumno inner join T_Programa on T_Alumno.FK_IdPrograma = T_Programa.ID where Nombre like '%" + nombre + "%';";
         ArrayList<String[]> result = conexion.executeQuery(sql);
         return result;
