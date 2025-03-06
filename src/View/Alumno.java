@@ -300,22 +300,29 @@ public class Alumno extends javax.swing.JFrame {
 
     //Click agregar alumno
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {
+        
+        if (txtCedula.getText().equals("") || txtName.getText().equals("") || txtApellido.getText().equals("") || txtCel.getText().equals("") || txtEmail.getText().equals("")) {
+            JOptionPane.showMessageDialog(null, "Por favor llene todos los campos");
 
-        alumno.setCedula(Integer.parseInt(txtCedula.getText()));
-        alumno.setNombre(txtName.getText());
-        alumno.setApellidos(txtApellido.getText());
-        alumno.setCelular(txtCel.getText());
-        alumno.setCorreo(txtEmail.getText());
-        alumno.setIdPrograma(idPrograma(cmboxPrograma.getSelectedItem().toString()));
-
-        if (alumno.insertAlumno()) {
-            JOptionPane.showMessageDialog(null, "Alumno agregado correctamente");
-            limpiarCampos();
         } else {
-            JOptionPane.showMessageDialog(null, "Error al agregar alumno");
-        }
+            
+            alumno.setCedula(Integer.parseInt(txtCedula.getText()));
+            alumno.setNombre(txtName.getText());
+            alumno.setApellidos(txtApellido.getText());
+            alumno.setCelular(txtCel.getText());
+            alumno.setCorreo(txtEmail.getText());
+            alumno.setIdPrograma(idPrograma(cmboxPrograma.getSelectedItem().toString()));
 
-        llenarTablaAlumno();
+            if (alumno.insertAlumno()) {
+                JOptionPane.showMessageDialog(null, "Alumno agregado correctamente");
+                limpiarCampos();
+            } else {
+                JOptionPane.showMessageDialog(null, "Error al agregar alumno");
+            }
+
+            llenarTablaAlumno();
+            
+        }
         
     }
 
