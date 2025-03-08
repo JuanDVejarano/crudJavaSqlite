@@ -114,3 +114,17 @@ insert into T_Programa_Asignatura(ID_Programa, ID_Asignatura) values(3, 14);
 insert into T_Programa_Asignatura(ID_Programa, ID_Asignatura) values(3, 15);
 insert into T_Programa_Asignatura(ID_Programa, ID_Asignatura) values(3, 16);
 insert into T_Programa_Asignatura(ID_Programa, ID_Asignatura) values(3, 19);
+
+insert into T_Alumno (Num_ID, Nombre, Apellidos, Celular, Correo, FK_IdPrograma) values(1015, 'Juan David', 'Vejarano', '3204504132', 'jvjearanom@ucentral.edu.co', 1);
+
+insert into T_Alumno_Asignatura (ID_Alumno, ID_Asignatura) values(1015, 1);
+insert into T_Alumno_Asignatura (ID_Alumno, ID_Asignatura) values(1015, 2);
+insert into T_Alumno_Asignatura (ID_Alumno, ID_Asignatura) values(1015, 3);
+insert into T_Alumno_Asignatura (ID_Alumno, ID_Asignatura) values(1015, 4);
+
+
+select TAS.Nombre AS NombreAsignatura, TD.Nombre AS NombreDocente 
+from T_Alumno AS TAL 
+inner join T_Alumno_Asignatura AS TAA ON TAL.Num_ID = TAA.ID_Alumno 
+inner join T_Asignatura AS TAS ON TAS.ID = TAA.ID_Asignatura 
+inner join T_Docente AS TD on TD.Num_ID = TAS.ID_Docente where TAL.Num_ID = 1015;

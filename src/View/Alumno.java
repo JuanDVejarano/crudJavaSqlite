@@ -325,6 +325,24 @@ public class Alumno extends javax.swing.JFrame {
         tableAlumno.setModel(model);
     }
 
+    //Metodo cargar materias en la tabla
+    public void llenarTablaAsignaturas() {
+        ArrayList<String[]> result; 
+        result = alumno.consultaAsignaturas(Integer.parseInt(txtCedula.getText()));
+        DefaultTableModel model = new DefaultTableModel() {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false; // Todas las celdas no son editables
+            }
+        };
+        model.addColumn("Nombre Asignatura");
+        model.addColumn("Nombre Docente");
+        for (String[] row : result) {
+            model.addRow(row);
+        }
+        tableMateria.setModel(model);
+    }
+
     public void llenarTablaAlumno(String nombre) {
         ArrayList<String[]> result; 
         result = alumno.consultaNombre(nombre);
@@ -399,6 +417,8 @@ public class Alumno extends javax.swing.JFrame {
                     txtCel.setText(result.get(0)[3]);
                     txtEmail.setText(result.get(0)[4]);
                     cmboxPrograma.setSelectedItem(result.get(0)[5]);
+
+                    llenarTablaAsignaturas();
                 } else {
                     JOptionPane.showMessageDialog(null, "No se encontró un alumno con la cédula ingresada");
                     limpiarCampos();
@@ -420,6 +440,9 @@ public class Alumno extends javax.swing.JFrame {
         txtCel.setText(tableAlumno.getValueAt(row, 3).toString());
         txtEmail.setText(tableAlumno.getValueAt(row, 4).toString());
         cmboxPrograma.setSelectedItem(tableAlumno.getValueAt(row, 5).toString());
+
+        llenarTablaAsignaturas();
+
     }
 
     //Click actualizar alumno
