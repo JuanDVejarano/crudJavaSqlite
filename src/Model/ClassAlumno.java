@@ -101,5 +101,23 @@ public class ClassAlumno extends Conexion {
         return result;
     }
 
+    public boolean updateAlumno() {
+        String sql = "update T_Alumno set Nombre = '" + nombre + "', Apellidos = '" + apellidos + "', Celular = '" + celular + "', Correo = '" + correo + "', FK_IdPrograma = " + idPrograma + " where Num_ID = " + cedula + ";";
+        if (conexion.executeUpdate(sql)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public boolean deleteAlumno() {
+        String sql = "delete from T_Alumno where Num_ID = " + cedula + ";";
+        if (conexion.executeUpdate(sql)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     //#endregion
 }

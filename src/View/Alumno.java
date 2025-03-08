@@ -135,8 +135,18 @@ public class Alumno extends javax.swing.JFrame {
         });
 
         btnActualizar.setText("Actualizar");
+        btnActualizar.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                btnActualizarActionPerformed(evt);
+            }
+        });
 
         btnEliminar.setText("Eliminar");
+        btnEliminar.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                btnEliminarActionPerformed(evt);
+            }
+        });
 
         jLabel3.setText("Materias:");
 
@@ -412,13 +422,63 @@ public class Alumno extends javax.swing.JFrame {
         cmboxPrograma.setSelectedItem(tableAlumno.getValueAt(row, 5).toString());
     }
 
+    //Click actualizar alumno
+    private void btnActualizarActionPerformed(ActionEvent evt) {
+        if (txtCedula.getText().equals("") || txtName.getText().equals("") || txtApellido.getText().equals("") || txtCel.getText().equals("") || txtEmail.getText().equals("")) {
+            JOptionPane.showMessageDialog(null, "Por favor llene todos los campos");
+        } else{
+            alumno.setCedula(Integer.parseInt(txtCedula.getText()));
+            alumno.setNombre(txtName.getText());
+            alumno.setApellidos(txtApellido.getText());
+            alumno.setCelular(txtCel.getText());
+            alumno.setCorreo(txtEmail.getText());
+            alumno.setIdPrograma(idPrograma(cmboxPrograma.getSelectedItem().toString()));
+
+            if (alumno.consultaCedula(Integer.parseInt(txtCedula.getText())).size() == 0) {
+                JOptionPane.showMessageDialog(null, "No se encontró un alumno con la cédula " + txtCedula.getText());
+            } else if (alumno.updateAlumno()) {
+                JOptionPane.showMessageDialog(null, "Alumno actualizado correctamente");
+                limpiarCampos();
+            } else {
+                JOptionPane.showMessageDialog(null, "Error al actualizar alumno");
+            }
+
+            llenarTablaAlumno();
+        }
+    }
+
+    //Click eliminar alumno
+    private void btnEliminarActionPerformed(ActionEvent evt) {
+        String cedulaText = txtCedula.getText();
+        if (!cedulaText.isEmpty() && alumno.consultaCedula(Integer.parseInt(cedulaText)).size() > 0) {
+            if(JOptionPane.showConfirmDialog(null, "¿Está seguro que desea eliminar este alumno?", "Eliminar alumno", JOptionPane.YES_NO_OPTION) == JOptionPane.NO_OPTION){
+                return;
+            }
+            try {
+                int cedula = Integer.parseInt(cedulaText);
+                alumno.setCedula(cedula);
+                if (alumno.deleteAlumno()) {
+                    JOptionPane.showMessageDialog(null, "Alumno eliminado correctamente");
+                    limpiarCampos();
+                    llenarTablaAlumno();
+                } else {
+                    JOptionPane.showMessageDialog(null, "Error al eliminar alumno");
+                }
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(null, "Por favor ingrese un número de cédula válido");
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Por favor ingrese un número de cédula valido");
+        }
+    }
+
     //Metodo al cargar el formulario
     private void formWindowOpened(java.awt.event.WindowEvent evt) {
         llenarTablaAlumno();
         llenarComboPrograma();
     }
 
-    //Metodo para buscar por nombre
+    //Metodo keyUp para buscar por nombre
     private void txtSearchNameKeyReleased(KeyEvent evt) {
         llenarTablaAlumno(txtSearchName.getText());
     }
