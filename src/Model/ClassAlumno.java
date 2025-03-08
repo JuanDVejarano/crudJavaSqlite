@@ -120,7 +120,7 @@ public class ClassAlumno extends Conexion {
     }
 
     public ArrayList<String[]> consultaAsignaturas(Integer cedula) {
-        String sql = "select TAS.Nombre AS NombreAsignatura, TD.Nombre AS NombreDocente from T_Alumno AS TAL inner join T_Alumno_Asignatura AS TAA ON TAL.Num_ID = TAA.ID_Alumno inner join T_Asignatura AS TAS ON TAS.ID = TAA.ID_Asignatura inner join T_Docente AS TD on TD.Num_ID = TAS.ID_Docente where TAL.Num_ID = " + cedula + ";";
+        String sql = "select TAS.Nombre AS NombreAsignatura, TD.Nombre || ' ' || TD.Apellidos  AS NombreDocente from T_Alumno AS TAL inner join T_Alumno_Asignatura AS TAA ON TAL.Num_ID = TAA.ID_Alumno inner join T_Asignatura AS TAS ON TAS.ID = TAA.ID_Asignatura inner join T_Docente AS TD on TD.Num_ID = TAS.ID_Docente where TAL.Num_ID = " + cedula + ";";
         ArrayList<String[]> result = conexion.executeQuery(sql);
         return result;
     }
